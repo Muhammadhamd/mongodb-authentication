@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login|register</title>
+</head>
+<body class="bg-[#f2f2f2]">
+    <div class="flex justify-around mt-20">
+        <div>
+            <form id="register" class="bg-white rounded shadow-[0px_0px_5px_#b4adad] p-[20px] gap-[20px] max-w-[500px] w-full">
+                <div class="flex justify-center">
+                    <h1 class="text-xl font-bold text-violet-500">Register new User</h1>
+                </div>
+                <label for="newfullname" class="text-slate-500 text-sm">Write your name</label>
+                <input type="text" id="newfullname" class="w-full rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border-2">
+                <label for="newfullname" class="text-slate-500 text-sm">Writw new UserName</label>
+               
+                <input type="text" id="newusername" class="w-full rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border-2">
+                <label for="newfullname" class="text-slate-500 text-sm">email*</label>
+               
+                <input type="email" id="newemail" class="w-full rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border-2">
+                <label for="newfullname" class="text-slate-500 text-sm">Password</label>
+               
+                <input type="password" id="newpassword" class="w-full rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border-2">
+                <div class="flex justify-center">
+                    <button class="bg-violet-700 text-white shadow rounded py-2 px-3 mt-4 font-semibold">Register</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <form id="login" class="bg-white rounded shadow-[0px_0px_5px_#b4adad] p-[20px] gap-[20px] max-w-[500px] w-full">
+                <div class="flex justify-center">
+                    <h1 class="text-xl font-bold text-violet-500">login</h1>
+                </div>
+               
+                <label for="newfullname" class="text-slate-500 text-sm">email or Username</label>
+               
+                <input type="text" id="userAddress" class="w-full rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border-2">
+                <label for="newfullname" class="text-slate-500 text-sm">Password</label>
+               
+                <input type="password" id="password" class="w-full rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border-2">
+        <div class="flex justify-center">
+            <button class="bg-violet-700 text-white shadow rounded py-2 px-3 mt-4 font-semibold">Login</button>
+        </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
+
+    <script>
+
+      document.querySelector("#register").addEventListener("submit",(e)=>{
+        e.preventDefault();
+
+        axios.post("/register",{
+            newPassword: document.getElementById("newpassword").value,
+            newFullName: document.getElementById("newfullname").value,
+            newUserName: document.getElementById("newusername").value,
+            newEmail: document.getElementById("newemail").value,
+        })
+        .then((res)=>{
+            console.log(res.data)
+        })
+        .catch((e)=>{
+            console.log(e)
+
+        })
+      })
+
+      document.querySelector("#login").addEventListener("submit",(e)=>{
+        e.preventDefault();
+
+        axios.post("/login",{
+            userPassword: document.getElementById("password").value,
+            userAddress: document.getElementById("userAddress").value,
+
+        })
+        .then((res)=>{
+            console.log(res.data)
+        })
+        .catch((e)=>{
+            console.log(e)
+
+        })
+      })
+    </script>
+</body>
+</html>
