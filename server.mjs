@@ -4,13 +4,16 @@ import path from "path"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import mongoose from "mongoose"
+import cookieParser from 'cookie-parser'
 import v1router from "./v1/index.mjs"
 const app = express()
 const __dirname = path.resolve()
 const mongodbURI =  process.env.mongodbURI || "mongodb+srv://muhammadhamdali572:hamdali99332@cluster0.g7j5dka.mongodb.net/userdatabase?retryWrites=true&w=majority";
 import cors from "cors"
-app.use(express.json())
+const SECRET = process.env.SECRET || "topsecret";
 
+app.use(express.json())
+app.use(cookieParser());
 app.use(cors({
     origin: ['http://localhost:4000', "*"],
     credentials: true
@@ -21,16 +24,16 @@ app.use(v1router)
 
 app.use((req, res, next) => {
 
-    console.log("req.cookies: ", req.cookies);
+    console.log("req.cookies: ", req.cookies.token);
 
-    if (!req?.cookies?.Token) {
+    if (!req?.cookies?.token) {
         res.status(401).send({
             message: "include http-only credentials with every request"
         })
         return;
     }
 
-    jwt.verify(req.cookies.Token, SECRET, function (err, decodedData) {
+    jwt.verify(req.cookies.token, SECRET, function (err, decodedData) {
         if (!err) {
 
             console.log("decodedData: ", decodedData);
